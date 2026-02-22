@@ -1,4 +1,4 @@
-.TH XSUM 1 sha3sum
+.TH XSUM 1 SHA3SUM
 .SH NAME
 xsum - Compute and check Xsum message digests
 .SH SYNOPSIS
@@ -37,12 +37,12 @@ are printed.
 .TP
 .B -c
 Read Xsum sums from the file and check them against
-the files on your systems. The input files files
-should be formated as the output of this program, or
+the files on your system. The input files
+should be formatted as the output of this program, or
 similarly. This is not going to work if any of the
-filenames in the input files starts with a regular
-blank space or horizontal tab space, or if they
-contain a line feed, carriage return or form feed,
+filenames in the input file start with a regular
+space or horizontal tab, or if they
+contain a line feed, carriage return, or form feed,
 unless the
 .B -z
 option is also used.
@@ -55,7 +55,7 @@ option is also used.
 Print the hashing parameters.
 .TP
 .B -x
-Convert input files from hexadecimal for to binary form
+Convert input files from hexadecimal form to binary form
 before calculating the checksums.
 .TP
 .B -z

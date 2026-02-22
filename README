@@ -23,7 +23,7 @@ DESCRIPTION
 	for Keccak and its close derivatives SHA-3, SHAKE and
 	RawSHAKE.
 
-	This utilities can generate checksums or verify the
+	These utilities can generate checksums or verify the
 	checksums of files.
 
 OPTIONS
