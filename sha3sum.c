@@ -27,11 +27,11 @@ int
 main(int argc, char *argv[])
 {
 	int bits = 224, orig_argc = argc;
-	char **orig_argv = alloca((argc + 1) * sizeof(*argv));
+	char **orig_argv = alloca(((size_t)argc + 1U) * sizeof(*argv));
 	struct libkeccak_generalised_spec spec;
 
 	libkeccak_generalised_spec_initialise(&spec);
-	memcpy(orig_argv, argv, (argc + 1) * sizeof(*argv));
+	memcpy(orig_argv, argv, ((size_t)argc + 1U) * sizeof(*argv));
 
 	ARGBEGIN {
 	case 'R':
