@@ -219,12 +219,12 @@ hash(const char *restrict filename, const struct libkeccak_spec *restrict spec,
 	if (fd < 0) {
 		if (errno == ENOENT)
 			return 1;
-		eperror();
+		goto error;
 	}
 
 	if ((hex ? generalised_sum_fd_hex : libkeccak_generalised_sum_fd)
 	    (fd, &state, spec, suffix, squeezes > 1 ? NULL : hashsum))
-		eperror();
+		goto error;
 	close(fd);
 
 	if (squeezes > 2)
@@ -234,6 +234,10 @@ hash(const char *restrict filename, const struct libkeccak_spec *restrict spec,
 	libkeccak_state_fast_destroy(&state);
 
 	return 0;
+
+error:
+	fprintf(stderr, "%s: %s: %s\n", argv0, filename, strerror(errno));
+	return 2;
 }
 
 
@@ -254,10 +258,12 @@ check(const struct libkeccak_spec *restrict spec, long int squeezes, const char 
       int hex, const char *restrict filename, const char *restrict correct_hash)
 {
 	size_t length = (size_t)((spec->output + 7) / 8);
+	int ret;
 
-	if (access(filename, F_OK) || hash(filename, spec, squeezes, suffix, hex)) {
+	ret = hash(filename, spec, squeezes, suffix, hex);
+	if (ret) {
 		printf("%s: Missing\n", filename);
-		return 1;
+		return ret;
 	}
 
 	libkeccak_unhex(hexsum, correct_hash);
@@ -399,7 +405,7 @@ check_checksums(const char *restrict filename, const struct libkeccak_spec *rest
 		user_error("file is malformated");
 
 	free(buf);
-	return ret;
+	return ret > 2 ? 2 : ret;
 
 	(void) style;
 }
